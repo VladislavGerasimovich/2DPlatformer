@@ -8,38 +8,35 @@ public class FinishWindow : MonoBehaviour
     [SerializeField] private CanvasGroup _canvasGroup;
 
     private float _time;
-
-    private void Update()
-    {
-        if(_time > 0)
-        {
-            _time -= Time.deltaTime;
-        }
-        if(_time < 0)
-        {
-            HideWindow();
-        }
-    }
+    private Coroutine _changeVisibility;
 
     private void OnEnable()
     {
-        _finish.ShowFinishWindow += ShowWindow;
+        _finish.ShowFinishWindow += Play;
     }
 
     private void OnDisable()
     {
-        _finish.ShowFinishWindow -= ShowWindow;
+        _finish.ShowFinishWindow -= Play;
     }
 
-    private void HideWindow()
+    private void Play()
     {
-        _canvasGroup.alpha = 0;
+        _changeVisibility = StartCoroutine(ShowWindow());
+    }
+
+    private IEnumerator ShowWindow()
+    {
         _time = 0;
-    }
 
-    private void ShowWindow()
-    {
-        _time = 5;
-        _canvasGroup.alpha = 1;
+        while(_time < 5)
+        {
+            _time += Time.deltaTime;
+            _canvasGroup.alpha = 1;
+            yield return null;
+        }
+
+        StopCoroutine(_changeVisibility);
+        _canvasGroup.alpha = 0;
     }
 }

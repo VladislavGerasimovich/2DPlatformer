@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
         ScoreChanged.Invoke(Score);
     }
 
-    public void ResetPlayer()
+    public void Reset()
     {
         transform.position = _startPosition;
         Score = 0;

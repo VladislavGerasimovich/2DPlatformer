@@ -13,8 +13,7 @@ public class WayPointMovement : MonoBehaviour
     private int _currentPoint;
     private float _speed = 2f;
 
-
-    void Start()
+    private void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _points = new Transform[_path.childCount];
@@ -25,7 +24,7 @@ public class WayPointMovement : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
         Transform target = _points[_currentPoint];
         transform.position = Vector3.MoveTowards(transform.position, target.position, _speed * Time.deltaTime);
@@ -35,6 +34,7 @@ public class WayPointMovement : MonoBehaviour
         {
             _spriteRenderer.flipX = true;
         }
+
         if(direction.x > 0)
         {
             _spriteRenderer.flipX = false;

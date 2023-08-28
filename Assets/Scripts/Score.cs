@@ -15,6 +15,11 @@ public class Score : MonoBehaviour
         _maxValue.text =  $"/ {_coins.childCount.ToString()}";
     }
 
+    public void Reset()
+    {
+        _currentValue.text = "0";
+    }
+
     private void OnEnable()
     {
         _player.ScoreChanged += ScoreChanged;
@@ -28,10 +33,5 @@ public class Score : MonoBehaviour
     private void ScoreChanged(int score)
     {
         _currentValue.text = score.ToString();
-    }
-
-    public void ResetScore()
-    {
-        _currentValue.text = "0";
     }
 }

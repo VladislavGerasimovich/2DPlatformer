@@ -51,8 +51,8 @@ public class Game : MonoBehaviour
     private void StartGame()
     {
         Time.timeScale = 1.0f;
-        _player.ResetPlayer();
-        _coins.ResetCoins();
-        _score.ResetScore();
+        _player.Reset();
+        _coins.Reset();
+        _score.Reset();
     }
 }

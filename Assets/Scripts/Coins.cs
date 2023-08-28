@@ -6,7 +6,7 @@ public class Coins : MonoBehaviour
 {
     [SerializeField] private Transform _coins;
 
-    public void ResetCoins()
+    public void Reset()
     {
         for (int i = 0; i < _coins.childCount; i++)
         {

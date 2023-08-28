@@ -9,7 +9,7 @@ public class PlayerCollisionHandler : MonoBehaviour
 {
     private Player _player;
 
-    void Start()
+    private void Start()
     {
         _player = GetComponent<Player>();
     }

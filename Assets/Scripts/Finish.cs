@@ -21,6 +21,7 @@ public class Finish : MonoBehaviour
                 _audioSourceFail.Play();
                 ShowFinishWindow?.Invoke();
             }
+
             if(player.Score == _coins.childCount)
             {
                 _audioSourceVictory.Play();
