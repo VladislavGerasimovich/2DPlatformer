@@ -9,18 +9,7 @@ public class Game : MonoBehaviour
     [SerializeField] private StartScreen _startScreen;
     [SerializeField] private GameOverScreen _gameOverScreen;
     [SerializeField] private Score _score;
-
-    public void OnGameOver()
-    {
-        Time.timeScale = 0;
-        _gameOverScreen.Open();
-    }
-
-    private void Start()
-    {
-        Time.timeScale = 0;
-        _startScreen.Open();
-    }
+    [SerializeField] private Hearts _hearts;
 
     private void OnEnable()
     {
@@ -34,6 +23,18 @@ public class Game : MonoBehaviour
         _startScreen.PlayButtonClick -= OnPlayButtonClick;
         _gameOverScreen.RestartButtonClick -= OnRestartButtonClick;
         _player.GameOver -= OnGameOver;
+    }
+
+    private void Start()
+    {
+        Time.timeScale = 0;
+        _startScreen.Open();
+    }
+
+    private void OnGameOver()
+    {
+        Time.timeScale = 0;
+        _gameOverScreen.Open();
     }
 
     private void OnRestartButtonClick()
@@ -54,5 +55,6 @@ public class Game : MonoBehaviour
         _player.Reset();
         _coins.Reset();
         _score.Reset();
+        _hearts.Reset();
     }
 }

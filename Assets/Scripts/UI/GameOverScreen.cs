@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GameOverScreen : Screen
+public class GameOverScreen: Screen
 {
     public event UnityAction RestartButtonClick;
 
@@ -22,5 +22,15 @@ public class GameOverScreen : Screen
     protected override void OnButtonClick()
     {
         RestartButtonClick?.Invoke();
+    }
+
+    private void OnEnable()
+    {
+        Button.onClick.AddListener(OnButtonClick);
+    }
+
+    private void OnDisable()
+    {
+        Button.onClick.RemoveListener(OnButtonClick);
     }
 }

@@ -5,75 +5,79 @@ using UnityEngine;
 
 public class PhysicsMovement : MonoBehaviour
 {
-    public float MinGroundNormalY = .65f;
-    public float GravityModifier = 1f;
-    public Vector2 Velocity;
-    public LayerMask LayerMask;
+    [SerializeField] private float _minGroundNormalY = .65f;
+    [SerializeField] private float _gravityModifier = 1f;
+    [SerializeField] private Vector2 _velocity;
+    [SerializeField] private LayerMask _layerMask;
 
-    protected AnimatorData animatorData = new AnimatorData();
-    protected float Speed = 3f;
-    protected Vector2 TargetVelocity;
-    protected bool Grounded;
-    protected Vector2 GroundNormal;
-    protected Rigidbody2D Rb2d;
-    protected ContactFilter2D ContactFilter;
-    protected RaycastHit2D[] HitBuffer = new RaycastHit2D[16];
-    protected List<RaycastHit2D> HitBufferList = new List<RaycastHit2D>(16);
-    protected SpriteRenderer SpriteRenderer;
-    protected Animator Animator;
+    private const float _minMoveDistance = 0.001f;
+    private const float _shellRadius = 0.01f;
 
-    protected const float MinMoveDistance = 0.001f;
-    protected const float ShellRadius = 0.01f;
+    private AnimatorData _animatorData = new AnimatorData();
+    private float _speed;
+    private Vector2 _targetVelocity;
+    private bool _grounded;
+    private Vector2 _groundNormal;
+    private Rigidbody2D _rigidbody;
+    private ContactFilter2D _contactFilter;
+    private RaycastHit2D[] _hitBuffer;
+    private List<RaycastHit2D> _hitBufferList;
+    private SpriteRenderer _spriteRenderer;
+    private Animator _animator;
 
-    private void OnEnable()
+    private void Awake()
     {
-        Rb2d = GetComponent<Rigidbody2D>();
-        SpriteRenderer = GetComponent<SpriteRenderer>();
-        Animator = GetComponent<Animator>();
+        _hitBuffer = new RaycastHit2D[16];
+        _hitBufferList = new List<RaycastHit2D>(16);
+        _speed = 3f;
+        _rigidbody = GetComponent<Rigidbody2D>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _animator = GetComponent<Animator>();
     }
 
     private void Start()
     {
-        ContactFilter.useTriggers = false;
-        ContactFilter.SetLayerMask(LayerMask);
-        ContactFilter.useLayerMask = true;
+        _contactFilter.useTriggers = false;
+        _contactFilter.SetLayerMask(_layerMask);
+        _contactFilter.useLayerMask = true;
     }
 
     private void Update()
     {
-        TargetVelocity = new Vector2(Input.GetAxis("Horizontal") * Speed, 0);
-        Animator.SetFloat(animatorData.Speed, Mathf.Abs(Input.GetAxis("Horizontal")));
+        _targetVelocity = new Vector2(Input.GetAxis("Horizontal") * _speed, 0);
+        _animator.SetFloat(_animatorData.Speed, Mathf.Abs(Input.GetAxis("Horizontal")));
 
-        if(TargetVelocity.x < 0)
+        if(_targetVelocity.x < 0)
         {
-            SpriteRenderer.flipX = true;
+            _spriteRenderer.flipX = true;
         }
 
-        if(TargetVelocity.x > 0)
+        if(_targetVelocity.x > 0)
         {
-            SpriteRenderer.flipX = false;
+            _spriteRenderer.flipX = false;
         }
 
-        if (Input.GetKey(KeyCode.Space) && Grounded)
+        if (Input.GetKey(KeyCode.Space) && _grounded)
         {
-            Velocity.y = 8;
-            Animator.SetBool(animatorData.IsJumping, true);
+            _velocity.y = 8;
+            _animator.SetBool(_animatorData.IsJumping, true);
         }
-        if (!Grounded)
+
+        if (!_grounded)
         {
-            Animator.SetBool(animatorData.IsJumping, false);
+            _animator.SetBool(_animatorData.IsJumping, false);
         }
     }
 
     private void FixedUpdate()
     {
-        Velocity += GravityModifier * Physics2D.gravity * Time.deltaTime;
-        Velocity.x = TargetVelocity.x;
+        _velocity += _gravityModifier * Physics2D.gravity * Time.deltaTime;
+        _velocity.x = _targetVelocity.x;
 
-        Grounded = false;
+        _grounded = false;
 
-        Vector2 deltaPosition = Velocity * Time.deltaTime;
-        Vector2 moveAlongGround = new Vector2(GroundNormal.y, -GroundNormal.x);
+        Vector2 deltaPosition = _velocity * Time.deltaTime;
+        Vector2 moveAlongGround = new Vector2(_groundNormal.y, -_groundNormal.x);
         Vector2 move = moveAlongGround * deltaPosition.x;
 
         Move(move, false);
@@ -87,45 +91,45 @@ public class PhysicsMovement : MonoBehaviour
     {
         float distance = move.magnitude;
 
-        if (distance > MinMoveDistance)
+        if (distance > _minMoveDistance)
         {
-            int count = Rb2d.Cast(move, ContactFilter, HitBuffer, distance + ShellRadius);
+            int count = _rigidbody.Cast(move, _contactFilter, _hitBuffer, distance + _shellRadius);
 
-            HitBufferList.Clear();
+            _hitBufferList.Clear();
 
             for (int i = 0; i < count; i++)
             {
-                HitBufferList.Add(HitBuffer[i]);
+                _hitBufferList.Add(_hitBuffer[i]);
             }
 
-            for (int i = 0; i < HitBufferList.Count; i++)
+            for (int i = 0; i < _hitBufferList.Count; i++)
             {
-                Vector2 currentNormal = HitBufferList[i].normal;
+                Vector2 currentNormal = _hitBufferList[i].normal;
 
-                if (currentNormal.y > MinGroundNormalY)
+                if (currentNormal.y > _minGroundNormalY)
                 {
-                    Grounded = true;
+                    _grounded = true;
 
                     if (yMovement)
                     {
-                        GroundNormal = currentNormal;
+                        _groundNormal = currentNormal;
                         currentNormal.x = 0;
                     }
                 }
 
-                float projection = Vector2.Dot(Velocity, currentNormal);
+                float projection = Vector2.Dot(_velocity, currentNormal);
 
                 if (projection < 0)
                 {
-                    Velocity = Velocity - projection * currentNormal;
+                    _velocity = _velocity - projection * currentNormal;
                 }
 
-                float modifiedDistance = HitBufferList[i].distance - ShellRadius;
+                float modifiedDistance = _hitBufferList[i].distance - _shellRadius;
                 distance = modifiedDistance < distance ? modifiedDistance : distance;
             }
         }
 
-        Rb2d.position = Rb2d.position + move.normalized * distance;
+        _rigidbody.position = _rigidbody.position + move.normalized * distance;
     }
 }
 
