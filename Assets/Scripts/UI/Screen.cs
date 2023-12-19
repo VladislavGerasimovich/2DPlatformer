@@ -8,10 +8,6 @@ public abstract class Screen : MonoBehaviour
     [SerializeField] protected CanvasGroup CanvasGroup;
     [SerializeField] protected Button Button;
 
-    public abstract void Open();
-
-    public abstract void Close();
-
     private void OnEnable()
     {
         Button.onClick.AddListener(OnButtonClick);
@@ -21,6 +17,10 @@ public abstract class Screen : MonoBehaviour
     {
         Button.onClick.RemoveListener(OnButtonClick);
     }
+
+    public abstract void Open();
+
+    public abstract void Close();
 
     protected abstract void OnButtonClick();
 }

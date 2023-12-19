@@ -7,6 +7,16 @@ public class GameOverScreen: Screen
 {
     public event UnityAction RestartButtonClick;
 
+    private void OnEnable()
+    {
+        Button.onClick.AddListener(OnButtonClick);
+    }
+
+    private void OnDisable()
+    {
+        Button.onClick.RemoveListener(OnButtonClick);
+    }
+
     public override void Close()
     {
         CanvasGroup.alpha = 0;
@@ -22,15 +32,5 @@ public class GameOverScreen: Screen
     protected override void OnButtonClick()
     {
         RestartButtonClick?.Invoke();
-    }
-
-    private void OnEnable()
-    {
-        Button.onClick.AddListener(OnButtonClick);
-    }
-
-    private void OnDisable()
-    {
-        Button.onClick.RemoveListener(OnButtonClick);
     }
 }
