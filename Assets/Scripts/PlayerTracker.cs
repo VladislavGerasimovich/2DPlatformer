@@ -6,11 +6,13 @@ public class PlayerTracker : MonoBehaviour
 {
     [SerializeField] private Player _player;
 
+    private float _minHeight = -2.4f;
+
     private void Update()
     {
-        if(_player.transform.position.y > -2.4f)
+        if(_player.transform.position.y > _minHeight)
         {
-            transform.position = new Vector3(_player.transform.position.x, _player.transform.position.y + 2.5f, transform.position.z);
+            transform.position = new Vector3(_player.transform.position.x, _player.transform.position.y + -_minHeight, transform.position.z);
         }
     }
 }

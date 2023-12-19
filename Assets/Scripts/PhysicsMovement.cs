@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(Animator))]
 public class PhysicsMovement : MonoBehaviour
 {
     [SerializeField] private float _minGroundNormalY = .65f;
@@ -13,7 +16,7 @@ public class PhysicsMovement : MonoBehaviour
     private const float _minMoveDistance = 0.001f;
     private const float _shellRadius = 0.01f;
 
-    private AnimatorData _animatorData = new AnimatorData();
+    private AnimatorData _animatorData;
     private float _speed;
     private Vector2 _targetVelocity;
     private bool _grounded;
@@ -27,6 +30,7 @@ public class PhysicsMovement : MonoBehaviour
 
     private void Awake()
     {
+        _animatorData = new AnimatorData();
         _hitBuffer = new RaycastHit2D[16];
         _hitBufferList = new List<RaycastHit2D>(16);
         _speed = 3f;

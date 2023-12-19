@@ -7,11 +7,17 @@ public class Signalling : MonoBehaviour
 {
     [SerializeField] private float number;
 
+    private LayerMask mask;
+
     public event UnityAction<bool> OnSignalling;
+
+    private void Awake()
+    {
+        mask = LayerMask.GetMask("Player");
+    }
 
     private void Update()
     {
-        LayerMask mask = LayerMask.GetMask("Player");
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right, number, mask);
 
         if (hit)
