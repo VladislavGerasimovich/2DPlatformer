@@ -9,7 +9,7 @@ public class WayPointMovement : MonoBehaviour
 {
     [SerializeField] private Transform _path;
     [SerializeField] private Player _player;
-    [SerializeField] private Signalling _signalling;
+    [SerializeField] private Scanner _scanner;
 
     private SpriteRenderer _spriteRenderer;
     private Transform[] _points;
@@ -19,12 +19,12 @@ public class WayPointMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        _signalling.OnSignalling += StartChase;
+        _scanner.PlayerSpotted += StartChase;
     }
 
     private void OnDisable()
     {
-        _signalling.OnSignalling -= StartChase;
+        _scanner.PlayerSpotted -= StartChase;
     }
 
     private void Awake()
@@ -61,11 +61,12 @@ public class WayPointMovement : MonoBehaviour
             if (_isChase == false)
             {
                 isWork = false;
-                StartCoroutine(MoveBetweenPoints());
             }
 
             yield return null;
         }
+
+        StartCoroutine(MoveBetweenPoints());
     }
 
     private IEnumerator MoveBetweenPoints()
@@ -90,11 +91,12 @@ public class WayPointMovement : MonoBehaviour
             if(_isChase)
             {
                 isWork = false;
-                StartCoroutine(Chase());
             }
 
             yield return null;
         }
+
+        StartCoroutine(Chase());
     }
 
     private void Move(Transform target)

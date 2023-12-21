@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1747771781571536511}
   - component: {fileID: 1747771781571536505}
   - component: {fileID: 1747771781571536507}
-  - component: {fileID: 1747771781571536506}
+  - component: {fileID: 7937247622033159878}
   m_Layer: 0
   m_Name: coin
   m_TagString: Untagged
@@ -220,7 +220,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1747771781571536506
+--- !u!114 &7937247622033159878
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

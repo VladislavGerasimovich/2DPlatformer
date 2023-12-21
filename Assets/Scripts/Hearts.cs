@@ -26,10 +26,9 @@ public class Hearts : MonoBehaviour
 
     public void Reset()
     {
-        for (int i = 0; i < _hearts.childCount; i++)
+        foreach (Transform heart in _hearts)
         {
-            _hearts.GetChild(i).GetComponent<SpriteRenderer>().enabled = true;
-            _hearts.GetChild(i).GetComponent<Collider2D>().enabled = true;
+            heart.GetComponent<Item>().Enable();
         }
     }
 }

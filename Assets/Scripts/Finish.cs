@@ -9,20 +9,21 @@ public class Finish : MonoBehaviour
     [SerializeField] private Transform _coins;
     [SerializeField] private AudioSource _audioSourceFail;
     [SerializeField] private AudioSource _audioSourceVictory;
+    [SerializeField] private Score _score;
 
-    public event UnityAction ShowFinishWindow;
+    public event UnityAction PlayerCameUp;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.TryGetComponent(out Player player))
         {
-            if(player.Score < _coins.childCount)
+            if(_score.Count < _coins.childCount)
             {
                 _audioSourceFail.Play();
-                ShowFinishWindow?.Invoke();
+                PlayerCameUp?.Invoke();
             }
 
-            if(player.Score == _coins.childCount)
+            if(_score.Count == _coins.childCount)
             {
                 _audioSourceVictory.Play();
                 player.Die();

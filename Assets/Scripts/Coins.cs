@@ -8,10 +8,9 @@ public class Coins : MonoBehaviour
 
     public void Reset()
     {
-        for (int i = 0; i < _coins.childCount; i++)
+        foreach (Transform coin in _coins)
         {
-            _coins.GetChild(i).GetComponent<SpriteRenderer>().enabled = true;
-            _coins.GetChild(i).GetComponent<Collider2D>().enabled = true;
+            coin.GetComponent<Coin>().Enable();
         }
     }
 }

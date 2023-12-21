@@ -8,7 +8,7 @@ public class PlayerTracker : MonoBehaviour
 
     private float _minHeight = -2.4f;
 
-    private void Update()
+    private void LateUpdate()
     {
         if(_player.transform.position.y > _minHeight)
         {

@@ -10,28 +10,27 @@ public class Score : MonoBehaviour
     [SerializeField] private Player _player;
     [SerializeField] private Transform _coins;
 
-    private void Start()
+    public int Count {  get; private set; }
+
+    private void Awake()
     {
         _maxValue.text =  $"/ {_coins.childCount.ToString()}";
     }
 
     public void Reset()
     {
+        Count = 0;
         _currentValue.text = "0";
     }
 
-    private void OnEnable()
+    public void IncreaseCount()
     {
-        _player.ScoreChanged += ScoreChanged;
+        Count++;
+        ScoreChanged();
     }
 
-    private void OnDisable()
+    private void ScoreChanged()
     {
-        _player.ScoreChanged -= ScoreChanged;
-    }
-
-    private void ScoreChanged(int score)
-    {
-        _currentValue.text = score.ToString();
+        _currentValue.text = Count.ToString();
     }
 }

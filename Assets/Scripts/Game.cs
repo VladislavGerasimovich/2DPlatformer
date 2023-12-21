@@ -13,16 +13,16 @@ public class Game : MonoBehaviour
 
     private void OnEnable()
     {
-        _startScreen.PlayButtonClick += OnPlayButtonClick;
+        _startScreen.ButtonPressed += OnPlayButtonClick;
         _gameOverScreen.RestartButtonClick += OnRestartButtonClick;
-        _player.GameOver += OnGameOver;
+        _player.Died += OnGameOver;
     }
 
     private void OnDisable()
     {
-        _startScreen.PlayButtonClick -= OnPlayButtonClick;
+        _startScreen.ButtonPressed -= OnPlayButtonClick;
         _gameOverScreen.RestartButtonClick -= OnRestartButtonClick;
-        _player.GameOver -= OnGameOver;
+        _player.Died -= OnGameOver;
     }
 
     private void Start()

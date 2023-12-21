@@ -7,9 +7,11 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 [RequireComponent(typeof(Player))]
 public class PlayerCollisionHandler : MonoBehaviour
 {
+    [SerializeField] private Score _score;
+
     private Player _player;
 
-    private void Start()
+    private void Awake()
     {
         _player = GetComponent<Player>();
     }
@@ -20,13 +22,17 @@ public class PlayerCollisionHandler : MonoBehaviour
         {
             if(_player.Health < _player.MaxHealth)
             {
+                heart.PlayMusic();
+                heart.Disable();
                 _player.IncreaseHealth();
             }
         }
 
         if(collision.TryGetComponent(out Coin coin))
         {
-            _player.IncreaseScore();
+            coin.PlayMusic();
+            coin.Disable();
+            _score.IncreaseCount();
         }
 
         if (collision.TryGetComponent(out WayPointMovement wayPointMovement))

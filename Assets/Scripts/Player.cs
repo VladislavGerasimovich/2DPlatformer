@@ -8,14 +8,12 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private Vector3 _startPosition;
 
-    public event UnityAction<int> ScoreChanged;
-    public event UnityAction GameOver;
+    public event UnityAction Died;
 
     public int Health { get; private set; }
     public int MaxHealth { get; private set; }
-    public int Score { get; private set; }
 
-    private void Start()
+    private void Awake()
     {
         Health = 5;
         MaxHealth = 5;
@@ -36,22 +34,14 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void IncreaseScore()
-    {
-        Score++;
-        ScoreChanged.Invoke(Score);
-    }
-
     public void Reset()
     {
         transform.position = _startPosition;
-        Score = 0;
         Health = 5;
     }
 
-
     public void Die()
     {
-        GameOver?.Invoke();
+        Died?.Invoke();
     }
 }

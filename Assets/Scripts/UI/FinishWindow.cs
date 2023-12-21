@@ -12,12 +12,12 @@ public class FinishWindow : MonoBehaviour
 
     private void OnEnable()
     {
-        _finish.ShowFinishWindow += Play;
+        _finish.PlayerCameUp += Play;
     }
 
     private void OnDisable()
     {
-        _finish.ShowFinishWindow -= Play;
+        _finish.PlayerCameUp -= Play;
     }
 
     private void Play()
