@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Heart : Item
+public class Enemy : Character
 {
-    public int AmountOfHealth { get; private set; }
+    public int Damage { get; private set; }
 
     private void Awake()
     {
-        AmountOfHealth = 1;
+        Damage = 1;
     }
 }
+

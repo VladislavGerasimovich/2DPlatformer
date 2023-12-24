@@ -3,44 +3,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
-public class Player : MonoBehaviour
+public class Player : Character
 {
     [SerializeField] private Vector3 _startPosition;
 
     public event UnityAction Died;
 
-    public int Health { get; private set; }
-    public int MaxHealth { get; private set; }
-
-    private void Awake()
+    public override void TakeDamage(int amountOfHealth)
     {
-        Health = 5;
-        MaxHealth = 5;
-    }
+        base.TakeDamage(amountOfHealth);
 
-    public void IncreaseHealth()
-    {
-        Health++;
-    }
-
-    public void TakeDamage()
-    {
-        Health--;
-
-        if (Health <= 0)
+        if (CurrentHealth <= 0)
         {
             Die();
         }
     }
 
-    public void Reset()
+    public override void Reset()
     {
+        base.Reset();
         transform.position = _startPosition;
-        Health = 5;
     }
 
-    public void Die()
+    public override void Die()
     {
         Died?.Invoke();
     }

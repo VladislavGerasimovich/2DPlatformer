@@ -41,7 +41,6 @@ public class WayPointMovement : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(Chase());
         StartCoroutine(MoveBetweenPoints());
     }
 

@@ -14,7 +14,7 @@ public class Score : MonoBehaviour
 
     private void Awake()
     {
-        _maxValue.text =  $"/ {_coins.childCount.ToString()}";
+        _maxValue.text =  $"/ {_coins.childCount}";
     }
 
     public void Reset()

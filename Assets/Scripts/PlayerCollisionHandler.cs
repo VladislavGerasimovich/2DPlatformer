@@ -20,11 +20,11 @@ public class PlayerCollisionHandler : MonoBehaviour
     {
         if(collision.TryGetComponent(out Heart heart))
         {
-            if(_player.Health < _player.MaxHealth)
+            if(_player.CurrentHealth < _player.MaxHealth)
             {
                 heart.PlayMusic();
                 heart.Disable();
-                _player.IncreaseHealth();
+                _player.IncreaseHealth(heart.AmountOfHealth);
             }
         }
 
@@ -35,9 +35,9 @@ public class PlayerCollisionHandler : MonoBehaviour
             _score.IncreaseCount();
         }
 
-        if (collision.TryGetComponent(out WayPointMovement wayPointMovement))
+        if (collision.TryGetComponent(out Enemy enemy))
         {
-            _player.TakeDamage();
+            _player.TakeDamage(enemy.Damage);
         }
 
         if(collision.TryGetComponent(out Spike spike))

@@ -6,15 +6,9 @@ using UnityEngine.Events;
 public class Scanner : MonoBehaviour
 {
     [SerializeField] private float _number;
-
-    private LayerMask _mask;
+    [SerializeField] private LayerMask _mask;
 
     public event UnityAction<bool> PlayerSpotted;
-
-    private void Awake()
-    {
-        _mask = LayerMask.GetMask("Player");
-    }
 
     private void Update()
     {
