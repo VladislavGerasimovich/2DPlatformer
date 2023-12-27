@@ -4,17 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
-[RequireComponent(typeof(Player))]
 public class PlayerCollisionHandler : MonoBehaviour
 {
     [SerializeField] private Score _score;
-
-    private Player _player;
-
-    private void Awake()
-    {
-        _player = GetComponent<Player>();
-    }
+    [SerializeField] private Player _player;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

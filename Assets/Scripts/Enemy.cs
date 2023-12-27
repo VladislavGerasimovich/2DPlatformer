@@ -6,9 +6,15 @@ public class Enemy : Character
 {
     public int Damage { get; private set; }
 
-    private void Awake()
+    public override void OnAwake()
     {
+        base.OnAwake();
         Damage = 1;
+    }
+
+    public override void Die()
+    {
+        Destroy(gameObject);
     }
 }
 

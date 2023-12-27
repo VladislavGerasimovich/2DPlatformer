@@ -11,16 +11,6 @@ public class Player : Character
 
     public event UnityAction Died;
 
-    public override void TakeDamage(int amountOfHealth)
-    {
-        base.TakeDamage(amountOfHealth);
-
-        if (CurrentHealth <= 0)
-        {
-            Die();
-        }
-    }
-
     public override void Reset()
     {
         base.Reset();

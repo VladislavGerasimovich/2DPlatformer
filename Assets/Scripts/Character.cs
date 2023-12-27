@@ -16,17 +16,27 @@ public class Character : MonoBehaviour
 
     private void Awake()
     {
-        MaxHealth = 5;
+        OnAwake();
+    }
+
+    public virtual void OnAwake()
+    {
+        MaxHealth = 10;
         _minHealth = 0;
         CurrentHealth = MaxHealth;
     }
 
-    public virtual void TakeDamage(int damage = 0)
+    public void TakeDamage(int damage = 0)
     {
         CurrentHealth -= damage;
         float percentOfHealth = (float)CurrentHealth / MaxHealth;
         CurrentHealth = Mathf.Clamp(CurrentHealth, _minHealth, MaxHealth);
         HealthChanged.Invoke(percentOfHealth);
+
+        if (CurrentHealth <= 0)
+        {
+            Die();
+        }
     }
 
     public void IncreaseHealth(int amountOfHealth)

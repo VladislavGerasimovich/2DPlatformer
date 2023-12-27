@@ -29,7 +29,7 @@ public class WayPointMovement : MonoBehaviour
 
     private void Awake()
     {
-        _speed = 1;
+        _speed = 0.5f;
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _points = new Transform[_path.childCount];
         
